@@ -1,0 +1,111 @@
+# Node.js / TypeScript
+backend/node_modules/
+frontend/node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+.yarn-integrity
+*.tsbuildinfo
+dist/
+build/
+coverage/
+.nyc_output/
+.eslintcache
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# TypeScript
+*.js.map
+*.tsbuildinfo
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+.docker/
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+.kube/
+
+# MongoDB
+data/
+**/dump/
+*.mongodb
+
+# OpenTelemetry
+**/otel-collector-config.yaml
+otelcol.yaml
+**/otelcol-config*.yaml
+
+# IDE / Editors
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# OS specific files
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Testing and temp files
+.tmp/
+.temp/
+*.swp
+*.swo
+
+# Dependency lock files (keep these, but listed for reference)
+# !package-lock.json
+# !yarn.lock
+# !pnpm-lock.yaml
+
+# Certificates and secrets
+*.pem
+*.key
+*.cert
+*.p12
