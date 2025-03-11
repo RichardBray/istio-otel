@@ -4,31 +4,34 @@ import { NodeSDK } from '@opentelemetry/sdk-node';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { Resource } from '@opentelemetry/resources';
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
+import { PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 
-if (process.env.OTEL_ENABLED === 'true') {
-  console.log('Initializing OpenTelemetry...');
+const otelCollectorUrl = 'http://otel-collector.observability.svc.cluster.local:4318';
 
-  const sdk = new NodeSDK({
-    resource: new Resource({
-      [SemanticResourceAttributes.SERVICE_NAME]: 'backend-service',
+const sdk = new NodeSDK({
+  resource: new Resource({
+    [ATTR_SERVICE_NAME]: 'backend-service',
+  }),
+  traceExporter: new OTLPTraceExporter({
+    url: `${otelCollectorUrl}/v1/traces`,
+    tls: {
+      insecure: true
+    }
+  }),
+  metricReader: new PeriodicExportingMetricReader({
+    exporter: new OTLPMetricExporter({
+      url: `${otelCollectorUrl}/v1/metrics`,
+      tls: {
+        insecure: true
+      }
     }),
-    traceExporter: new OTLPTraceExporter({
-      url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://otel-collector:4318/v1/traces',
-    }),
-    instrumentations: [getNodeAutoInstrumentations()],
-  });
+  }),
+  instrumentations: [getNodeAutoInstrumentations()],
+});
 
-  sdk.start();
-
-  // Gracefully shut down the SDK on process exit
-  process.on('SIGTERM', () => {
-    sdk.shutdown()
-      .then(() => console.log('OpenTelemetry SDK shut down successfully'))
-      .catch((error) => console.log('Error shutting down OpenTelemetry SDK', error))
-      .finally(() => process.exit(0));
-  });
-}
+sdk.start();
 
 const app = express();
 const port = 5000;
