@@ -12,7 +12,8 @@ target "frontend" {
   args = {
     OTEL_ENABLED = OTEL_ENABLED
   }
-  tags = ["myapp/frontend"]
+  tags = ["richobray/frontend"]
+  platforms = ["linux/amd64", "linux/arm64"]
 }
 
 target "backend" {
@@ -21,5 +22,6 @@ target "backend" {
   args = {
     OTEL_ENABLED = OTEL_ENABLED
   }
-  tags = ["myapp/backend"]
+  tags = ["richobray/backend"]
+  platforms = ["linux/amd64", "linux/arm64"]
 }

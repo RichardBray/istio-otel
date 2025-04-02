@@ -16,7 +16,9 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: myapp/frontend
+        image: richobray/frontend:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
+      nodeSelector:
+        kubernetes.io/arch: arm64
